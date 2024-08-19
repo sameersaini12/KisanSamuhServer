@@ -15,6 +15,7 @@ export const addToOrderHistory = async (req,res) => {
             paymentMode : req.body.paymentMode,
             buyingGroup : req.body.buyingGroup,
             deliveryDate : req.body.deliveryDate,
+            rewardCoins : req.body.rewardCoins,
         })
 
         await OrderedProduct.save()
@@ -136,7 +137,6 @@ export const getAllOrders = async (req,res) => {
 
 export const getCurrentGroupOrder = async (req,res) => {
     try {
-        console.log(req.params.groupName)
         const orders = await Order.aggregate([
             {
                 $match : {
@@ -186,7 +186,8 @@ export const getCurrentGroupOrder = async (req,res) => {
 
 export const getPreviousGroupOrder = async (req,res) => {
     try {
-        console.log(req.params.groupName)
+        const pageNumber = Number(req.params.pageNumber)
+        const pageSize = Number(req.params.pageSize)
         const orders = await Order.aggregate([
             {
                 $match : {
@@ -209,8 +210,14 @@ export const getPreviousGroupOrder = async (req,res) => {
             },
             {
                 $sort : {
-                    "_id" : 1
+                    "_id" : -1
                 }
+            },
+            {
+                $skip : (pageNumber)*pageSize
+            },
+            {
+                $limit : pageSize
             }
         ])
 
@@ -232,3 +239,24 @@ export const getPreviousGroupOrder = async (req,res) => {
     }
 }
 
+export const getCoinRewardHistory = async (req,res) => {
+    try {
+        const orders = await Order.find({userId : req.params.id, status : "delivered", rewardCoins : { $gt : 0}}).sort({updatedAt : -1})
+
+        if(!orders) {
+            return res.status(400).json({
+                message : "Fetching Coin history Query Failed"
+            })
+        }
+        res.status(200).json({
+            message : "Coin History has been successfully fetched",
+            data : orders
+        })
+    }catch {
+        res.status(500).json({
+            message : "Error occurs while fetching coin history",
+            error : err
+        })
+        console.log(err)
+    }
+}

@@ -42,6 +42,10 @@ const orderSchema = new mongoose.Schema({
     deliveryDate : {
         type: Date,
         required : true
+    },
+    rewardCoins : {
+        type : Number,
+        default : 0
     }
 },{
     timestamps : true

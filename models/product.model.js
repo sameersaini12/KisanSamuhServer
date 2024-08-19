@@ -45,6 +45,10 @@ const productSchema = new mongoose.Schema({
     isAvailable : {
         type : Boolean,
         default : true
+    },
+    reward : {
+        type : Number,
+        default : 0
     }
 },
 {

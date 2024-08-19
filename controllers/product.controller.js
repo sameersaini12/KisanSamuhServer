@@ -2,16 +2,24 @@ import { getObjectURL, putObjectURL } from "../dbConnect/awsS3.js";
 import Category from "../models/category.model.js";
 import Product from "../models/product.model.js"
 
-const fetchImageAddresses = async (numberOfImages , nameOfProduct) => {
+const fetchImageAddresses = async (numberOfImages , product_name) => {
+
     let imageAddressList = []
+    let temp_name = product_name
+    temp_name = temp_name.trim()
+    let nameOfProduct = temp_name.replaceAll(" " , "+")
     for(let i=1;i<=numberOfImages;i++) {
-        const image_url = await getObjectURL(`product_images/${nameOfProduct}/image_${i}`);
+        // const image_url = await getObjectURL(`product_images/${nameOfProduct}/image_${i}`);
+        const image_url = `https://kisansamuh.s3.ap-south-1.amazonaws.com/product_images/${nameOfProduct}/image_${i}`;
         imageAddressList.push(image_url)
         // console.log("Address "+ image_url)
     }
     // console.log(imageAddressList)
     return imageAddressList
 }
+
+// fetchImageAddresses(3 , "  Round  up   ")
+
 
 export const createProduct = async (req,res) => {
     try {
@@ -27,7 +35,8 @@ export const createProduct = async (req,res) => {
             categories : req.body.categories,
             price : req.body.price,
             discount : req.body.discount,
-            image : await fetchImageAddresses(numberOfImages , req.body.title)
+            image : await fetchImageAddresses(numberOfImages , req.body.title),
+            reward : req.body.reward
         });
         await newProduct.save();
         if(!newProduct) {
@@ -92,10 +101,17 @@ export const deleteProduct = async (req,res) => {
 export const getAllProducts = async (req,res) => {
     try {
         const categories = JSON.parse(req.query.categories).toLowerCase()
+        const pageNumber = req.body.pageNumber || 1
+        const pageSize = req.body.pageSize || 4
+        console.log(pageNumber+" "+  pageSize)
         if(categories.length) {
             var productList = await Product.find({ categories : { $in : categories } })
+            .skip((pageNumber-1)*pageSize)
+            .limit(pageSize)
         }else {
             var productList = await Product.find()
+            .skip((pageNumber-1)*pageSize)
+            .limit(pageSize)
         }
         
         res.status(200).json({

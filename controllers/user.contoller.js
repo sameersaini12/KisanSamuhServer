@@ -35,6 +35,7 @@ export const updateUser = async (req, res) => {
 
 export const getUserDetails = async (req,res) => {
     try {
+        console.log(req.params.id)
         const user = await User.find({_id : req.params.id})
         if(!user) {
             return res.status(404).json({
@@ -242,3 +243,57 @@ export const deleteAddress = async (req,res) => {
         console.log(err)
     }
 }
+
+export const updateRewardCoins = async (req,res) => {
+    try {
+        console.log((req.body.coins))
+        console.log(req.params.id)
+        const updatedUser = await User.findByIdAndUpdate(
+            req.params.id,
+            {
+                $inc : {
+                    coins : req.body.coins
+                }
+            },
+            {
+                new : true
+            }
+        )
+        if(!updatedUser) {
+            return res.status(404).json({
+                message : "User not Found!"
+            })
+        }
+        res.status(200).json({
+            message : "User has been updated successfully",
+            data : updatedUser
+        })
+    }catch (err) {
+        res.status(500).json({
+            message : "Update Reward Coins query failed",
+            error : err
+        })
+        console.log(err)
+    }
+}
+
+// export const getRewardCoins = async (req,res) => {
+//     try {
+//         const user = await User.find({_id : req.params.id})
+//         if(!user) {
+//             return res.status(404).json({
+//                 message : "User not Found!"
+//             })
+//         }
+//         res.status(200).json({
+//             message : "User has been fetched successfully",
+//             data : user.coins
+//         })
+//     }catch (err) {
+//         res.status(500).json({
+//             message : "Update Reward Coins query failed",
+//             error : err
+//         })
+//         console.log(err)
+//     }
+// }

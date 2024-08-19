@@ -28,9 +28,19 @@ export const getObjectURL = async (key) => {
     return url
 }
 
+// export const getObjec = async (key) => {
+//     const command = new GetObjectCommand({
+//         Bucket : "kisansamuh",
+//         Key : key,
+//     })
+//     const url = await s3Client.getObjectURL(command)
+//     return url
+// }
+
+
 // const init = async () => {
 //     // console.log("URL is "+ await putObjectURL('nutrient.png' , "image/png"))
-//     console.log("URL is " + await getObjectURL("roundupimage"))
+//     console.log("URL is " + await putObjectURL("image_1", "image/png" , "product_images/daf/"))
 // }
 
 

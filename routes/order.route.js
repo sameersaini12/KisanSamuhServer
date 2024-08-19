@@ -1,6 +1,6 @@
 import express from "express"
 import verifyToken, { verifyAdmin } from "../middleware/verifyToken.js"
-import { addToOrderHistory, getAllActiveOrders, getAllOrders, getAllOrdersAdmin, getCurrentGroupOrder, getPreviousGroupOrder, updateOrder } from "../controllers/order.controller.js"
+import { addToOrderHistory, getAllActiveOrders, getAllOrders, getAllOrdersAdmin, getCoinRewardHistory, getCurrentGroupOrder, getPreviousGroupOrder, updateOrder } from "../controllers/order.controller.js"
 const router = express.Router()
 
 router.post("/add-to-order-history" , verifyToken, addToOrderHistory)
@@ -9,6 +9,7 @@ router.get("/fetch-all-orders" , verifyAdmin , getAllOrdersAdmin)
 router.post("/update-order/:id" , verifyAdmin , updateOrder)
 router.get("/fetch-active-orders/:id" , verifyToken , getAllActiveOrders)
 router.get("/get-current-group-order/:groupName" , verifyToken , getCurrentGroupOrder)
-router.get("/get-previous-group-order/:groupName" , verifyToken , getPreviousGroupOrder)
+router.get("/get-previous-group-order/:groupName/:pageNumber/:pageSize" , verifyToken , getPreviousGroupOrder)
+router.get("/get-reward-history/:id" , verifyToken , getCoinRewardHistory)
 
 export default router
