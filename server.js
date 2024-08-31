@@ -12,26 +12,6 @@ const socketIO = new Server(httpServer , {
         origin : "http://localhost:8081"
     }
 })
-// console.log(socketIO)
-
-// socketIO.on("connection", (socket) => {
-//     console.log(`${socket.id} user just connected!`);
-//     socket.on('message' , (data)=> {
-//         console.log(data)
-//     })
-// });
-
-// socketIO.on('connection' , (socket) => {
-//     console.log(`${socket.id} user is connected`)
-//     socket.on('message' , (data) => {
-//         console.log("1" , data)
-//         socketIO.emit('messageResponse' , data)
-//         console.log("1" , data)
-//     })
-//     socket.on('disconnect' , () => {
-//         console.log('User is disconnected')
-//     })
-// })
 
 import dotenv from "dotenv"
 dotenv.config()

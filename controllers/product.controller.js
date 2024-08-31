@@ -101,19 +101,21 @@ export const deleteProduct = async (req,res) => {
 export const getAllProducts = async (req,res) => {
     try {
         const categories = JSON.parse(req.query.categories).toLowerCase()
-        const pageNumber = req.body.pageNumber || 1
-        const pageSize = req.body.pageSize || 4
-        console.log(pageNumber+" "+  pageSize)
+        // console.log("categories"+ categories)
+        // const pageNumber = req.body.pageNumber || 1
+        // const pageSize = req.body.pageSize || 10
+        var productList
         if(categories.length) {
-            var productList = await Product.find({ categories : { $in : categories } })
-            .skip((pageNumber-1)*pageSize)
-            .limit(pageSize)
+            productList = await Product.find({ categories : { $in : categories } })
+            // .skip((pageNumber-1)*pageSize)
+            // .limit(pageSize)
         }else {
-            var productList = await Product.find()
-            .skip((pageNumber-1)*pageSize)
-            .limit(pageSize)
+            productList = await Product.find()
+            // .skip((pageNumber-1)*pageSize)
+            // .limit(pageSize)
         }
-        
+
+        // console.log(productList)
         res.status(200).json({
             message : "Products has been fetched successfully",
             data : productList

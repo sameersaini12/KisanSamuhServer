@@ -277,6 +277,7 @@ export const updateRewardCoins = async (req,res) => {
     }
 }
 
+
 // export const getRewardCoins = async (req,res) => {
 //     try {
 //         const user = await User.find({_id : req.params.id})
