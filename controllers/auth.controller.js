@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import User from "../models/user.model.js"
-import twilio from "twilio"
+// import twilio from "twilio"
 import otpGenerator from "otp-generator"
 import Otp from "../models/otp.model.js"
 
@@ -66,10 +66,10 @@ export const login = async (req,res) => {
     }
 }
 
-const twilioAccountSid = process.env.TWILIO_ACCOUNT_SID
-const twilioAccountAuthToken = process.env.TWILIO_ACCOUNT_AUTH_TOKEN
+// const twilioAccountSid = process.env.TWILIO_ACCOUNT_SID
+// const twilioAccountAuthToken = process.env.TWILIO_ACCOUNT_AUTH_TOKEN
 
-const twilioClient = new twilio(twilioAccountSid , twilioAccountAuthToken)
+// const twilioClient = new twilio(twilioAccountSid , twilioAccountAuthToken)
 
 
 export const sendOtp = async (req,res) => {
