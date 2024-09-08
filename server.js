@@ -9,7 +9,7 @@ const httpServer = createServer(app)
 import {Server} from "socket.io"
 const socketIO = new Server(httpServer , {
     cors : {
-        origin : "http://localhost:8081"
+        origin : "*"
     }
 })
 
