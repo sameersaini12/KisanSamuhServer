@@ -100,11 +100,13 @@ export const deleteProduct = async (req,res) => {
 
 export const getAllProducts = async (req,res) => {
     try {
-        const categories = JSON.parse(req.query.categories).toLowerCase()
+        let categories = ''
+        if(req.query.categories)
+        categories = JSON.parse(req.query.categories).toLowerCase()
         // console.log("categories"+ categories)
         // const pageNumber = req.body.pageNumber || 1
         // const pageSize = req.body.pageSize || 10
-        var productList
+        let productList = []
         if(categories.length) {
             productList = await Product.find({ categories : { $in : categories } })
             // .skip((pageNumber-1)*pageSize)
@@ -123,7 +125,7 @@ export const getAllProducts = async (req,res) => {
     }catch(err) {
         res.status(500).json({
             message : "Error occured while fetching products",
-            error : err
+            error : err.message
         })
     }
 }
