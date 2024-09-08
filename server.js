@@ -20,6 +20,10 @@ app.use(express.json())
 
 app.use("/" , routes)
 
+app.get("/" , (req,res) => {
+    res.send("Server is running")
+})
+
 const PORT = process.env.PORT || 5000
 httpServer.listen(PORT , ()=> {
     console.log(`Listening on PORT ${PORT}`);
