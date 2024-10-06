@@ -7,6 +7,7 @@ import orderRoute from "./order.route.js"
 import feedbackRoute from "./feedback.route.js"
 import farmRoute from "./farm.route.js"
 import rewardRoute from "./reward.route.js"
+import adminSettingRoute from "./adminSetting.route.js"
 
 router.use("/auth", authRoute)
 router.use("/users", userRoute)
@@ -15,5 +16,6 @@ router.use("/order" , orderRoute)
 router.use("/feedback" , feedbackRoute)
 router.use("/farm" , farmRoute)
 router.use("/reward" , rewardRoute)
+router.use("/admin-setting" , adminSettingRoute)
 
 export default router

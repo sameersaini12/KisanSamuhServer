@@ -4,8 +4,6 @@ import mongoose from "mongoose";
 
 export const updateUser = async (req, res) => {
     try {
-        console.log((req.body))
-        console.log(req.params.id)
         const updatedUser = await User.findByIdAndUpdate(
             req.params.id,
             {
@@ -35,7 +33,6 @@ export const updateUser = async (req, res) => {
 
 export const getUserDetails = async (req,res) => {
     try {
-        console.log(req.params.id)
         const user = await User.find({_id : req.params.id})
         if(!user) {
             return res.status(404).json({
@@ -211,7 +208,6 @@ export const getAddresss = async (req , res) => {
 export const deleteAddress = async (req,res) => {
     try {
         const addressIndex = req.body.index
-        console.log(addressIndex)
         await Address.findByIdAndUpdate(req.params.id,
             {
                 $unset : { [`address.${addressIndex}`] : 1 }
@@ -225,7 +221,6 @@ export const deleteAddress = async (req,res) => {
                 new : true
             }
         )
-        console.log(addressAfterDelete)
         if(!addressAfterDelete) {
             return res.status(400).json({
                 message : "There is no address available"
@@ -246,8 +241,6 @@ export const deleteAddress = async (req,res) => {
 
 export const updateRewardCoins = async (req,res) => {
     try {
-        console.log((req.body.coins))
-        console.log(req.params.id)
         const updatedUser = await User.findByIdAndUpdate(
             req.params.id,
             {
